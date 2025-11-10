@@ -5,35 +5,25 @@ body {
   background: #f4f6f8;
   color: #222;
 }
-
 header {
   background: #002b5c;
   color: white;
   padding: 1rem;
   text-align: center;
 }
-
 nav a {
   color: white;
   margin: 0 10px;
   text-decoration: none;
   font-weight: bold;
 }
-
 main {
   padding: 2rem;
   max-width: 800px;
   margin: auto;
 }
-
-section {
-  display: none;
-}
-
-.visible {
-  display: block;
-}
-
+section { display: none; }
+.visible { display: block; }
 input, button {
   display: block;
   margin: 10px 0;
@@ -41,18 +31,13 @@ input, button {
   width: 100%;
   max-width: 400px;
 }
-
 button {
   background: #0073e6;
   color: white;
   border: none;
   cursor: pointer;
 }
-
-button:hover {
-  background: #005bb5;
-}
-
+button:hover { background: #005bb5; }
 footer {
   text-align: center;
   padding: 1rem;
