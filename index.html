@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Only Support Coordination Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>The Only Support Coordination Portal</h1>
+    <nav>
+      <a href="#" onclick="showSection('login')">Login</a>
+      <a href="#" onclick="showSection('calculator')">Budget Calculator</a>
+      <a href="#" onclick="showSection('booking')">Bookings</a>
+      <a href="#" onclick="showSection('resources')">Resources</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="login" class="visible">
+      <h2>Staff & Participant Login</h2>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <p id="loginMessage"></p>
+    </section>
+
+    <section id="calculator">
+      <h2>NDIS Budget Calculator</h2>
+      <label>Total Plan Budget ($):</label>
+      <input type="number" id="totalBudget" />
+      <label>Amount Used ($):</label>
+      <input type="number" id="usedBudget" />
+      <button onclick="calculateRemaining()">Calculate</button>
+      <p id="result"></p>
+    </section>
+
+    <section id="booking">
+      <h2>Book a Support Session</h2>
+      <iframe 
+        src="https://calendly.com/" 
+        width="100%" 
+        height="600" 
+        style="border:none;">
+      </iframe>
+    </section>
+
+    <section id="resources">
+      <h2>Resources & Tools</h2>
+      <ul>
+        <li><a href="https://www.ndis.gov.au/" target="_blank">NDIS Official Site</a></li>
+        <li><a href="https://www.tac.vic.gov.au/" target="_blank">TAC Resources</a></li>
+        <li><a href="https://www.dffh.vic.gov.au/" target="_blank">DFFH Information</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© The Only Support Coordination | Secure Portal</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
