@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TOC — Design Preview (minimal / friendly / high-contrast)</title>
+  <style>
+    /* Inline preview CSS — three themes and responsive layout */
+    :root{
+      --radius:10px; --gap:14px; --max-w:1100px;
+      --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    /* default (minimal) */
+    body{font-family:var(--font-sans);margin:0;background:#ffffff;color:#111827;padding:22px;line-height:1.45}
+    .wrap{max-width:var(--max-w);margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:var(--gap);padding:12px 0}
+    header h1{font-size:1.15rem;margin:0;font-weight:600}
+    nav a{margin-left:12px;text-decoration:none;color:inherit;padding:8px;border-radius:8px}
+    nav a.active{background:#0f766e;color:#fff}
+    .controls{display:flex;gap:8px;align-items:center}
+    .theme-chip{border:1px solid rgba(0,0,0,0.06);padding:7px 10px;border-radius:8px;cursor:pointer;background:transparent}
+    main{margin-top:16px;display:grid;gap:16px}
+    section{background:#f7f7f8;padding:16px;border-radius:var(--radius);box-shadow:0 1px 2px rgba(16,24,40,0.04)}
+    section h2{margin:0 0 8px 0;font-size:1.05rem}
+    input,button{width:100%;padding:10px 12px;margin-top:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);font-size:1rem}
+    button.primary{background:#0f766e;color:#fff;border:0;font-weight:600}
+    .muted{color:#6b7280;font-size:0.95rem}
+    footer{margin-top:18px;text-align:center;color:#6b7280;font-size:0.9rem}
+    iframe{width:100%;height:340px;border:none;border-radius:8px;display:block}
+    /* responsive two-column layout on wide screens */
+    @media(min-width:900px){
+      main{grid-template-columns:1fr 380px}
+      section#booking{grid-column:1 / -1}
+      iframe{height:460px}
+    }
+
+    /* Friendly theme */
+    body.theme-friendly{background:#f6fffa;color:#063741}
+    body.theme-friendly section{background:#ffffff}
+    body.theme-friendly nav a.active{background:#0ea5a4;color:#fff}
+    body.theme-friendly .theme-chip{border-color:rgba(3,105,99,0.08)}
+
+    /* High-contrast theme */
+    body.theme-high-contrast{background:#000;color:#ffff00}
+    body.theme-high-contrast section{background:#000;border:2px solid #ffff00}
+    body.theme-high-contrast nav a{color:#ffff00}
+    body.theme-high-contrast nav a.active{background:#ffff00;color:#000}
+    body.theme-high-contrast .theme-chip{border-color:#ffff00;color:#000;background:#ffff00}
+    /* Preview thumbnails */
+    .thumbs{display:flex;gap:10px;align-items:center}
+    .thumb{width:120px;height:90px;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.08);cursor:pointer;display:flex;flex-direction:column}
+    .thumb .bar{height:36px;display:flex;align-items:center;padding:6px 8px;font-weight:600}
+    .thumb .body{flex:1;padding:6px;font-size:12px}
+    .t-minimal .bar{background:#0f766e;color:#fff}
+    .t-minimal{background:#fff;color:#111827}
+    .t-friendly .bar{background:#0ea5a4;color:#fff}
+    .t-friendly{background:#f6fffa;color:#063741}
+    .t-high .bar{background:#000;color:#ffff00}
+    .t-high{background:#000;color:#ffff00}
+    .meta{font-size:12px;color:var(--muted);margin-top:6px}
+    .row{display:flex;gap:12px}
+    /* small util */
+    .kbd{background:#111827;color:#fff;padding:2px 6px;border-radius:6px;font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="display:flex;align-items:center;gap:12px">
+        <h1>The Only Support Coordination</h1>
+        <div class="meta muted">Design preview</div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a href="#" onclick="show('login')" id="nav-login" class="active">Login</a>
+        <a href="#" onclick="show('calculator')" id="nav-calc">Budget Calculator</a>
+        <a href="#" onclick="show('booking')" id="nav-book">Bookings</a>
+        <a href="#" onclick="show('resources')" id="nav-res">Resources</a>
+      </nav>
+
+      <div class="controls" aria-hidden="false">
+        <div class="thumbs" style="align-items:center">
+          <div class="thumb t-minimal" onclick="applyTheme('minimal')" title="Minimal">
+            <div class="bar">Minimal</div>
+            <div class="body">Neutral, modern</div>
+          </div>
+          <div class="thumb t-friendly" onclick="applyTheme('friendly')" title="Friendly">
+            <div class="bar">Friendly</div>
+            <div class="body">Soft, inviting</div>
+          </div>
+          <div class="thumb t-high" onclick="applyTheme('high-contrast')" title="High-contrast">
+            <div class="bar">High</div>
+            <div class="body">Accessibility</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="login" class="visible">
+        <h2>Staff & Participant Login</h2>
+        <input id="username" placeholder="Username" type="text" />
+        <input id="password" placeholder="Password" type="password" />
+        <button class="primary" onclick="demoLogin()">Login</button>
+        <div id="loginMessage" class="muted"></div>
+      </section>
+
+      <section id="calculator">
+        <h2>NDIS Budget Calculator</h2>
+        <label class="muted">Total Plan Budget ($)</label>
+        <input id="totalBudget" type="number" placeholder="e.g. 25000" />
+        <label class="muted">Amount Used ($)</label>
+        <input id="usedBudget" type="number" placeholder="e.g. 7200" />
+        <button class="primary" onclick="calculate()">Calculate</button>
+        <div id="result" class="muted" style="margin-top:8px;font-weight:600"></div>
+      </section>
+
+      <section id="booking">
+        <h2>Book a Support Session</h2>
+        <!-- demo embed; replace with real Calendly link -->
+        <iframe srcdoc="<html><body style='font-family:Inter,system-ui;padding:18px'><h3>Calendly demo</h3><p class='muted'>Replace src with your Calendly scheduling link.</p></body></html>"></iframe>
+      </section>
+
+      <section id="resources">
+        <h2>Resources & Tools</h2>
+        <ul>
+          <li><a href="https://www.ndis.gov.au/" target="_blank">NDIS Official Site</a></li>
+          <li><a href="https://www.tac.vic.gov.au/" target="_blank">TAC Resources</a></li>
+          <li><a href="https://www.dffh.vic.gov.au/" target="_blank">DFFH Information</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>© The Only Support Coordination | Secure Portal — preview • press thumbnail to switch theme</footer>
+  </div>
+
+  <script>
+    // Simple preview JS
+    (function(){
+      function show(id){
+        document.querySelectorAll('main section').forEach(s=>{
+          s.style.display = s.id === id ? 'block' : 'none';
+        });
+        document.querySelectorAll('nav a').forEach(a=> a.classList.toggle('active', a.getAttribute('onclick').includes(id)));
+      }
+      window.show = show;
+      // initial visible state
+      show('login');
+
+      window.applyTheme = function(t){
+        document.body.classList.remove('theme-friendly','theme-high-contrast');
+        if(t === 'friendly') document.body.classList.add('theme-friendly');
+        if(t === 'high-contrast') document.body.classList.add('theme-high-contrast');
+        // persist preview only (localStorage)
+        try{ localStorage.setItem('toc-preview-theme', t); }catch(e){}
+      };
+      // restore saved theme
+      try{
+        const saved = localStorage.getItem('toc-preview-theme') || 'minimal';
+        applyTheme(saved);
+      }catch(e){}
+
+      window.demoLogin = function(){
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value.trim();
+        const msg = document.getElementById('loginMessage');
+        if(!u || !p){ msg.textContent = 'Enter a valid username and password.'; return; }
+        msg.textContent = 'Welcome, ' + u + ' — demo login.';
+        show('calculator');
+      };
+
+      window.calculate = function(){
+        const t = Number(document.getElementById('totalBudget').value) || 0;
+        const used = Number(document.getElementById('usedBudget').value) || 0;
+        const out = document.getElementById('result');
+        if(t <= 0){ out.textContent = 'Enter a valid total budget.'; return; }
+        const remaining = Math.max(0, t - used);
+        const pct = Math.round((remaining / t) * 100);
+        out.textContent = `Remaining: $${remaining.toFixed(2)} (${pct}% of total)`;
+      };
+    })();
+  </script>
+</body>
+</html>
